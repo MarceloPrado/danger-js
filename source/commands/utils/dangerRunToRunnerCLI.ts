@@ -2,9 +2,13 @@ import { join } from "path"
 
 const usesProcessSeparationCommands = ["ci", "pr", "local"]
 
-const dangerRunToRunnerCLI = (argv: string[]) => {
+const dangerRunToRunnerCLI = (argv: string[], debug: boolean) => {
   let newCommand = []
   newCommand.push(argv[0])
+
+  if (debug) {
+    newCommand.push("--inspect-brk")
+  }
 
   // e.g. node --inspect distribution/commands/danger-run-ci.js --dangerfile myDangerfile.ts
   // or node distribution/commands/danger-pr.js --dangerfile myDangerfile.ts
@@ -14,7 +18,7 @@ const dangerRunToRunnerCLI = (argv: string[]) => {
   } else if (argv[0].includes("node") || process.pkg != null) {
     // convert
     let newJSFile = argv[1]
-    usesProcessSeparationCommands.forEach(name => {
+    usesProcessSeparationCommands.forEach((name) => {
       newJSFile = newJSFile.replace("danger-" + name, "danger-runner")
     })
 

@@ -74,7 +74,7 @@ export const runRunner = async (app: SharedCLI, config?: Partial<RunnerConfig>) 
       }
 
       const processName = (app.process && addSubprocessCallArguments(app.process.split(" "))) || undefined
-      const runnerCommand = processName || dangerRunToRunnerCLI(process.argv)
+      const runnerCommand = processName || dangerRunToRunnerCLI(process.argv, app.debug)
       d(`Preparing to run: ${runnerCommand}`)
 
       // Make concrete type for the runner config with a mix of the defaults

@@ -1,7 +1,7 @@
 import program from "commander"
 import chalk from "chalk"
 
-process.on("unhandledRejection", function(reason: string, _p: any) {
+process.on("unhandledRejection", function (reason: string, _p: any) {
   console.log(chalk.red("Error: "), reason)
   process.exitCode = 1
 })
@@ -35,6 +35,8 @@ export interface SharedCLI extends program.CommanderStatic {
   removePreviousComments?: boolean
   /** Output JSON to STDOUT */
   outputJSON: boolean
+  /** Attach a node debugger to the spawned danger subprocess */
+  debug: boolean
 }
 
 export default (command: any) =>
@@ -58,3 +60,4 @@ export default (command: any) =>
       "Removes all previous comment and create a new one in the end of the list",
       false
     )
+    .option("-d, --debug", "Attach a node debugger to the spawned danger subprocess", false)
